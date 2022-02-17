@@ -16,7 +16,7 @@ def deco_second_level(parameter):
             start=time.time()
             func(*args, **kwargs)
             stop=time.time()
-            at='time: %f' % (stop-start)
+            at='time: %f\nname of function: %s' % ((stop-start),func.__name__)
             print(at)
             f=open(parameter, 'w')
             f.write(at)
