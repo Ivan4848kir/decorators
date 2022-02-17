@@ -3,7 +3,7 @@
 будет показывать в консоли сообщение "Покупайте наших котиков!" и возвращать
 результат запущенной функции. 1.2 Параметризовать декоратор таким образом, чтобы сообщение,
 печатаемое перед выполнением функции можно было задавать как параметр во время декорирования.'''
-
+from random import randint
 def deco_second_level(parameter):
     def deco_first_level(func):
         def wrapper(*args, **kwargs):
@@ -14,7 +14,13 @@ def deco_second_level(parameter):
 
 @deco_second_level(parameter='Покупайте наших котиков')
 def arbitrary_func():
-    print('Произвольная функция')
+    rand_int=randint(1,2)
+    if rand_int==1:
+        cat='Сиамская кошка'
+    else:
+        cat='Мейн-кун'
+    print(cat)
+    return cat
 
 arbitrary_func()
 
