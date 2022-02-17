@@ -9,6 +9,7 @@ def deco_second_level(parameter):
         def wrapper(*args, **kwargs):
             print(parameter)
             func(*args, **kwargs)
+            return func(*args, **kwargs)
         return wrapper
     return deco_first_level
 
@@ -19,9 +20,8 @@ def arbitrary_func():
         cat='Сиамская кошка'
     else:
         cat='Мейн-кун'
-    print(cat)
     return cat
 
-arbitrary_func()
+print(arbitrary_func())
 
 

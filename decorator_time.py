@@ -21,6 +21,7 @@ def deco_second_level(parameter):
             f=open(parameter, 'w')
             f.write(at)
             f.close()
+            return func(*args, *kwargs)
         return wrapper
     return deco_first_level
 
