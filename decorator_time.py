@@ -14,14 +14,14 @@ def deco_second_level(parameter):
     def deco_first_level(func):
         def wrapper(*args, **kwargs):
             start=time.time()
-            func(*args, **kwargs)
+            res=func(*args, **kwargs)
             stop=time.time()
             at='time: %f\nname of function: %s' % ((stop-start),func.__name__)
             print(at)
             f=open(parameter, 'w')
             f.write(at)
             f.close()
-            return func(*args, *kwargs)
+            return res
         return wrapper
     return deco_first_level
 
@@ -33,5 +33,5 @@ def somefunc(): #this function consider factorial 50000
         factorial *= i
     return  factorial
 
-somefunc()
+print(somefunc())
 

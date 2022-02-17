@@ -8,7 +8,6 @@ def deco_second_level(parameter):
     def deco_first_level(func):
         def wrapper(*args, **kwargs):
             print(parameter)
-            func(*args, **kwargs)
             return func(*args, **kwargs)
         return wrapper
     return deco_first_level
