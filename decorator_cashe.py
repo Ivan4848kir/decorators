@@ -7,30 +7,31 @@
 автоматической очистки кэша в процессе выполнения функций.
 3.3 Параметризовать время кэширования в декораторе.'''
 import time
-def cash(func):
-    _cash={}
-    _time=time.time()
-    def wrapped(*args, **kwargs):
-        nonlocal _cash
-        if args[0] not in _cash.keys():
-            res=func(*args, **kwargs)
-            _cash[args[0]]=res
-            _cash['time']=time.time()
-            print('from func')
-            return func(*args, **kwargs)
-        elif (time.time()-_cash['time'])<=3:
-            print('from cash')
-            return _cash[args[0]]
-        else:
-            res = func(*args, **kwargs)
-            _cash[args[0]] = res
-            _cash['time'] = time.time()
-            print('from func')
-            return func(*args, **kwargs)
+def deco_second_level(parameter):
+    def cash(func):
+        _cash={}
+        _time=time.time()
+        def wrapped(*args, **kwargs):
+            nonlocal _cash
+            if args[0] not in _cash.keys():
+                res=func(*args, **kwargs)
+                _cash[args[0]]=res
+                _cash['time']=time.time()
+                print('from func')
+                return func(*args, **kwargs)
+            elif (time.time()-_cash['time'])<=parameter:
+                print('from cash')
+                return _cash[args[0]]
+            else:
+                res = func(*args, **kwargs)
+                _cash[args[0]] = res
+                _cash['time'] = time.time()
+                print('from func')
+                return func(*args, **kwargs)
+        return wrapped
+    return cash
 
-    return wrapped
-
-@cash
+@deco_second_level(parameter=10)
 def factorial(n):
     factorial = 1
     for i in range(1, n):
@@ -39,11 +40,11 @@ def factorial(n):
 
 
 print(factorial(10))
-time.sleep(1)
+time.sleep(5)
 print(factorial(10))
-time.sleep(1)
+time.sleep(5)
 print(factorial(11))
-time.sleep(4)
+time.sleep(11)
 print(factorial(11))
 
 
