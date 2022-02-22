@@ -15,11 +15,19 @@ def cash(func):
         if args[0] not in _cash.keys():
             res=func(*args, **kwargs)
             _cash[args[0]]=res
+            _cash['time']=time.time()
             print('from func')
             return func(*args, **kwargs)
-        else:
+        elif (time.time()-_cash['time'])<=3:
             print('from cash')
             return _cash[args[0]]
+        else:
+            res = func(*args, **kwargs)
+            _cash[args[0]] = res
+            _cash['time'] = time.time()
+            print('from func')
+            return func(*args, **kwargs)
+
     return wrapped
 
 @cash
@@ -31,9 +39,11 @@ def factorial(n):
 
 
 print(factorial(10))
+time.sleep(1)
 print(factorial(10))
+time.sleep(1)
 print(factorial(11))
-
-
+time.sleep(4)
+print(factorial(11))
 
 
