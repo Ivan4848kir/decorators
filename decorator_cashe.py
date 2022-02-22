@@ -8,17 +8,18 @@
 3.3 Параметризовать время кэширования в декораторе.'''
 import time
 def cash(func):
-    _cash={'Time':}
+    _cash={}
     _time=time.time()
     def wrapped(*args, **kwargs):
         nonlocal _cash
-        if not _cash.get(args) and (_time-_cash['Time'])<=10:
+        if args[0] not in _cash.keys():
             res=func(*args, **kwargs)
-            _cash[args]=res
-            _cash['Time']=_time
+            _cash[args[0]]=res
+            print('from func')
             return func(*args, **kwargs)
         else:
-            return _cash[args]
+            print('from cash')
+            return _cash[args[0]]
     return wrapped
 
 @cash
@@ -30,6 +31,9 @@ def factorial(n):
 
 
 print(factorial(10))
+print(factorial(10))
+print(factorial(11))
+
 
 
 
